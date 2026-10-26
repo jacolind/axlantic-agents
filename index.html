@@ -96,7 +96,6 @@ footer{border-top:1px solid var(--rule);padding-block:28px 40px;color:var(--mute
   <b>Test mode.</b><span>No payment is taken. Try codes:</span>
   <code data-code="DEMO20">DEMO20</code><span class="small">20% off service</span>
   <code data-code="WELCOME500">WELCOME500</code><span class="small">€500 off, Nov to Dec 2026 bookings</span>
-  <code data-code="FREE">FREE</code><span class="small">100% off everything</span>
 </div></div>
 
 <header><div class="wrap">
@@ -199,7 +198,6 @@ const TAKEN=[[addDays(today,9),addDays(today,15)],[addDays(today,38),addDays(tod
 const CODES={
   DEMO20:{type:"percent",value:20,from:"2000-01-01",to:"2099-12-31"},
   WELCOME500:{type:"eur",value:500,from:"2026-11-01",to:"2026-12-31"},
-  FREE:{type:"percent",value:100,from:"2000-01-01",to:"2099-12-31",applies_to:["service","setup","deposit"]},
 };
 function resolveCode(raw,start,end){const code=raw.trim().toUpperCase(),c=CODES[code];
  if(!c)throw new Error("That code does not exist. Check the spelling.");
