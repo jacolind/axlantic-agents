@@ -1,0 +1,273 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Axlantic Agents</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: single column research-note page, booking desk at the end with calendar left and ticket right */
+:root{
+  --paper:#f4f5f2; --ink:#16191d; --muted:#5d6570; --rule:#d9ddd6; --panel:#ffffff;
+  --cobalt:#2443b8; --cobalt-ink:#ffffff; --taken:#e6e8e3; --sel:#dfe5fa; --ok:#16794a; --bad:#b4261a;
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#111418; --ink:#e9ebe6; --muted:#9aa2ac; --rule:#2a3037; --panel:#181c21;
+  --cobalt:#8aa2ff; --cobalt-ink:#0d1016; --taken:#22272e; --sel:#22305e; --ok:#4cc38a; --bad:#ff8a7a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#111418; --ink:#e9ebe6; --muted:#9aa2ac; --rule:#2a3037; --panel:#181c21;
+  --cobalt:#8aa2ff; --cobalt-ink:#0d1016; --taken:#22272e; --sel:#22305e; --ok:#4cc38a; --bad:#ff8a7a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}
+.wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.12;margin:0;text-wrap:balance}
+.demo{background:var(--sel);border-bottom:1px solid var(--rule);font-size:14px}
+.demo .wrap{padding-block:10px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.demo code{font-family:var(--mono);font-size:13px;background:var(--panel);border:1px solid var(--rule);padding:1px 6px;border-radius:4px;cursor:pointer}
+header .wrap{display:flex;justify-content:space-between;align-items:baseline;padding-block:22px}
+.logo{font-family:var(--display);font-size:22px;font-weight:600}
+nav{display:flex;gap:20px}nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--ink)}
+.hero{padding-block:40px 48px;display:grid;gap:18px}
+.hero h1{font-size:clamp(36px,6vw,60px);max-width:14ch}
+.hero p{color:var(--muted);font-size:19px;max-width:58ch;margin:0}
+.btn{display:inline-block;background:var(--cobalt);color:var(--cobalt-ink);border:0;border-radius:8px;padding:12px 20px;font:600 15px var(--body);cursor:pointer;text-decoration:none;width:max-content}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:focus-visible,button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--cobalt);border:1px solid var(--cobalt)}
+.small{font-size:13px;color:var(--muted)}
+section{border-top:1px solid var(--rule);padding-block:52px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+section h2{font-size:32px;margin-bottom:10px}
+.lede{color:var(--muted);max-width:60ch;margin:0 0 28px}
+.chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--panel)}
+.agent{padding:20px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);display:grid;gap:6px;align-content:start}
+.agent:nth-child(3n){border-right:0}.agent:nth-last-child(-n+3){border-bottom:0}
+.agent .tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt)}
+.agent h3{font-size:20px}.agent p{margin:0;color:var(--muted);font-size:15px}
+.agent .feeds{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.rates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-bottom:18px}
+.rate b{font-family:var(--display);font-size:40px;font-weight:600;display:block;font-variant-numeric:tabular-nums}
+.rate span{color:var(--muted);font-size:14px}
+.rate small{display:block;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:2px}
+.desk{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;align-items:start}
+.cal{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:16px}
+.calhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.calhead b{font-family:var(--display);font-size:20px;font-weight:600}
+.calhead button{background:none;border:1px solid var(--rule);color:var(--ink);border-radius:6px;width:34px;height:34px;cursor:pointer;font-size:16px}
+.grid7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;text-align:center}
+.dow{font-family:var(--mono);font-size:11px;color:var(--muted);padding:4px 0}
+.day{border:0;background:none;color:var(--ink);font:500 14px var(--body);padding:9px 0;border-radius:6px;cursor:pointer;font-variant-numeric:tabular-nums}
+.day:hover:not(:disabled){background:var(--sel)}
+.day:disabled{color:var(--muted);opacity:.45;cursor:not-allowed}
+.day.taken{background:var(--taken);opacity:1;text-decoration:line-through}
+.day.inrange{background:var(--sel);border-radius:0}
+.day.edge{background:var(--cobalt);color:var(--cobalt-ink)}
+.legend{display:flex;gap:16px;margin-top:12px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:6px}
+.ticket{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:20px;display:grid;gap:14px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td{padding:7px 0;border-bottom:1px dashed var(--rule)}
+td:last-child{text-align:right;font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums}
+tr.disc td{color:var(--ok)}
+tr.total td{border-bottom:0;font-weight:600;padding-top:10px}
+tr.total td:last-child{font-size:17px}
+.fields{display:grid;gap:10px}
+label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+input{width:100%;padding:10px 12px;border:1px solid var(--rule);border-radius:7px;background:var(--paper);color:var(--ink);font:15px var(--body)}
+.coderow{display:flex;gap:8px}.coderow input{text-transform:uppercase;font-family:var(--mono)}
+.msg{font-size:14px;min-height:1.4em;margin:0}.msg.bad{color:var(--bad)}.msg.ok{color:var(--ok)}
+.done{border:1px solid var(--cobalt);border-radius:10px;padding:16px;background:var(--sel);font-size:14px}
+footer{border-top:1px solid var(--rule);padding-block:28px 40px;color:var(--muted);font-size:13px}
+
+.info{position:relative;display:inline-grid;place-items:center;width:18px;height:18px;margin-left:4px;border:1px solid var(--muted);border-radius:50%;background:none;color:var(--muted);font:italic 600 11px var(--display);cursor:help;padding:0;vertical-align:1px}
+.infotip{position:absolute;left:0;bottom:calc(100% + 8px);width:min(260px,70vw);background:var(--ink);color:var(--paper);font:13px/1.45 var(--body);font-style:normal;text-align:left;padding:8px 10px;border-radius:6px;opacity:0;visibility:hidden;transition:opacity .15s;z-index:5}
+.info:hover .infotip,.info:focus .infotip{opacity:1;visibility:visible}
+.check{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink)}
+.check input{width:18px;height:18px;margin:0;accent-color:var(--cobalt)}
+.check a{color:var(--cobalt)}
+.terms{margin:0;padding-left:20px;display:grid;gap:8px;max-width:68ch;color:var(--muted);font-size:15px}
+@media (max-width:760px){.desk,.rates{grid-template-columns:minmax(0,1fr)}.chain{grid-template-columns:minmax(0,1fr)}.agent{border-right:0!important;border-bottom:1px solid var(--rule)!important}.agent:last-child{border-bottom:0!important}nav{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="demo"><div class="wrap">
+  <b>Test mode.</b><span>No payment is taken. Try codes:</span>
+  <code data-code="DEMO20">DEMO20</code><span class="small">20% off service</span>
+  <code data-code="WELCOME500">WELCOME500</code><span class="small">€500 off, Nov to Dec 2026 bookings</span>
+  <code data-code="FREE">FREE</code><span class="small">100% off everything</span>
+</div></div>
+
+<header><div class="wrap">
+  <div class="logo">Axlantic</div>
+  <nav><a href="#agents">Agents</a><a href="#book">Book</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1>Your marketing desk runs on agents</h1>
+    <p>Six AI agents run marketing for asset managers. One client at a time.</p>
+    <a class="btn" href="#book">Pick your dates</a>
+  </div>
+
+  <section id="agents">
+    <div class="eyebrow">The swarm</div>
+    <h2>Six agents that feed each other</h2>
+    <div class="chain">
+      <div class="agent"><span class="tag">Reads</span><h3>News reader</h3><p>Daily market summary for your products.</p></div>
+      <div class="agent"><span class="tag">Writes</span><h3>Research writer</h3><p>Notes in your house style.</p></div>
+      <div class="agent"><span class="tag">Writes</span><h3>Post writer</h3><p>LinkedIn and X posts, queued for approval.</p></div>
+      <div class="agent"><span class="tag">Publishes</span><h3>LinkedIn agent</h3><p>Keeps your page active.</p></div>
+      <div class="agent"><span class="tag">Reaches out</span><h3>Podcast agent</h3><p>Finds guests and drafts questions.</p></div>
+      <div class="agent"><span class="tag">Proposes</span><h3>Product agent</h3><p>Suggests baskets and indices to list.</p></div>
+    </div>
+  </section>
+
+
+  <section id="book">
+    <div class="eyebrow">Booking</div>
+    <h2>Book your slot</h2>
+    <div class="desk">
+      <div class="cal">
+        <div class="calhead">
+          <button id="prev" type="button" aria-label="Previous month">‹</button>
+          <b id="month"></b>
+          <button id="next" type="button" aria-label="Next month">›</button>
+        </div>
+        <div class="grid7" id="grid"></div>
+        <div class="legend"><span><i style="background:var(--cobalt)"></i>Your dates</span><span><i style="background:var(--taken)"></i>Booked</span></div>
+      </div>
+
+      <div class="ticket">
+        <table>
+          <tr><td>Dates</td><td id="qDates">Pick dates</td></tr>
+          <tr><td>Service <button type="button" class="info" aria-label="How pricing works" aria-describedby="infotip">i<span class="infotip" id="infotip" role="tooltip">€144 a day for 30 days or more. Each day under 30 adds €2 to the day rate, so 29 days is €146 a day and 1 day is €202.</span></button></td><td id="qService">€0</td></tr>
+          <tr><td>Setup fee</td><td id="qSetup">€200</td></tr>
+          <tr><td>Deposit, refunded</td><td id="qDeposit">€1,000</td></tr>
+          <tr class="disc" id="qDiscRow" hidden><td id="qDiscLabel">Discount</td><td id="qDisc"></td></tr>
+          <tr class="total"><td>Pay today</td><td id="qTotal">€0</td></tr>
+        </table>
+        <div class="fields">
+          <label for="name">Name<input id="name" autocomplete="name" value="Anna Berg"></label>
+          <label for="email">Work email<input id="email" type="email" autocomplete="email" value="anna@example-fund.com"></label>
+          <label for="company">Company<input id="company" autocomplete="organization" value="Example Fund AB"></label>
+          <label for="code">Discount code
+            <span class="coderow"><input id="code" autocomplete="off"><button class="btn ghost" id="apply" type="button">Apply</button></span>
+          </label>
+        </div>
+        <label class="check" for="agree"><input type="checkbox" id="agree"> I have read the <a href="#disclaimer">disclaimer</a></label>
+        <button class="btn" id="pay" type="button" disabled>Continue to payment</button>
+        <p class="msg" id="msg"></p>
+        <div class="done" id="done" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="disclaimer">
+    <div class="eyebrow">Disclaimer</div>
+    <ul class="terms">
+      <li>Prices are in EUR and exclude VAT where it applies.</li>
+      <li>The day rate is €144 for bookings of 30 days or more. Each day under 30 adds €2 per day: 29 days is €146 a day, 1 day is €202.</li>
+      <li>Every booking carries a €200 setup fee and a €1,000 deposit. The deposit is refunded when the contract ends.</li>
+      <li>We serve one client at a time. Dates are yours once payment clears. An unpaid checkout releases the dates after 30 minutes.</li>
+      <li>Discount codes apply only to the dates and charges they were issued for.</li>
+      <li>Revolut processes the payment and emails your receipt. Axlantic Limited, Cyprus, is the seller.</li>
+    </ul>
+  </section>
+</main>
+
+<footer><div class="wrap">Axlantic Limited, Cyprus · jacob@axlantic.com · Payments processed by Revolut</div></footer>
+
+<script>
+// ---- pricing: same logic as worker/pricing.js ----
+const BASE=144,STEP=2,FULL=30,SETUP=200,DEPOSIT=1000,r2=n=>Math.round(n*100)/100;
+const dayRate=d=>d>=FULL?BASE:BASE+STEP*(FULL-d);
+const serviceFee=d=>r2(d*dayRate(d));
+function quote(days,disc){const L={service:serviceFee(days),setup:SETUP,deposit:DEPOSIT},off={service:0,setup:0,deposit:0};
+ if(disc){const scope=disc.applies_to||["service"];let left=disc.type==="eur"?disc.value:0;
+  for(const k of["service","setup","deposit"]){if(!scope.includes(k))continue;
+   if(disc.type==="percent")off[k]=r2(L[k]*disc.value/100);else{off[k]=r2(Math.min(left,L[k]));left=r2(left-off[k])}}}
+ const d=r2(off.service+off.setup+off.deposit);return{days,...L,discount:d,code:disc?disc.code:null,total:r2(L.service+L.setup+L.deposit-d)}}
+
+// ---- simulated backend (replaced by the Cloudflare Worker when deployed) ----
+const isoOf=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const today=new Date();today.setHours(0,0,0,0);
+const TAKEN=[[addDays(today,9),addDays(today,15)],[addDays(today,38),addDays(today,51)]].map(([a,b])=>({start:isoOf(a),end:isoOf(b)}));
+const CODES={
+  DEMO20:{type:"percent",value:20,from:"2000-01-01",to:"2099-12-31"},
+  WELCOME500:{type:"eur",value:500,from:"2026-11-01",to:"2026-12-31"},
+  FREE:{type:"percent",value:100,from:"2000-01-01",to:"2099-12-31",applies_to:["service","setup","deposit"]},
+};
+function resolveCode(raw,start,end){const code=raw.trim().toUpperCase(),c=CODES[code];
+ if(!c)throw new Error("That code does not exist. Check the spelling.");
+ if(start<c.from||end>c.to)throw new Error(`${code} only covers bookings from ${c.from} to ${c.to}.`);
+ return{code,...c}}
+
+// ---- UI ----
+const $=id=>document.getElementById(id);
+const eur=n=>"€"+n.toLocaleString("en-IE",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
+const daysIncl=(a,b)=>Math.round((Date.parse(b+"T00:00:00Z")-Date.parse(a+"T00:00:00Z"))/864e5)+1;
+const isTaken=iso=>TAKEN.some(r=>iso>=r.start&&iso<=r.end);
+let view=new Date(today.getFullYear(),today.getMonth(),1),pickA=null,pickB=null,disc=null;
+
+function drawCal(){
+  $("month").textContent=view.toLocaleString("en-GB",{month:"long",year:"numeric"});
+  const g=$("grid");g.innerHTML="";
+  ["Mo","Tu","We","Th","Fr","Sa","Su"].forEach(d=>g.insertAdjacentHTML("beforeend",`<div class="dow">${d}</div>`));
+  const lead=(view.getDay()+6)%7;for(let i=0;i<lead;i++)g.insertAdjacentHTML("beforeend","<span></span>");
+  const n=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
+  for(let d=1;d<=n;d++){const dt=new Date(view.getFullYear(),view.getMonth(),d),iso=isoOf(dt);
+    const b=document.createElement("button");b.type="button";b.className="day";b.textContent=d;
+    const past=dt<today,tk=isTaken(iso);b.disabled=past||tk;if(tk)b.classList.add("taken");
+    const lo=pickA&&pickB?pickA:null,hi=pickB;
+    if(iso===pickA||iso===pickB)b.classList.add("edge");else if(lo&&iso>lo&&iso<hi)b.classList.add("inrange");
+    b.setAttribute("aria-label",dt.toDateString()+(tk?", booked":""));
+    b.onclick=()=>pick(iso);g.appendChild(b)}
+  $("prev").disabled=view<=new Date(today.getFullYear(),today.getMonth(),1);
+}
+function pick(iso){
+  if(!pickA||pickB){pickA=iso;pickB=null}
+  else if(iso<pickA){pickA=iso}
+  else{ if(TAKEN.some(r=>pickA<=r.end&&iso>=r.start)){drawCal();return show("That range crosses another client's booking. Pick dates on one side of it.","bad")}
+        pickB=iso }
+  disc=null;drawCal();render();
+  if(pickB&&$("code").value.trim())applyCode();
+}
+function applyCode(){
+  if(!$("code").value.trim()){disc=null;return render()}
+  if(!pickB)return show("Pick your dates first, then apply the code.","bad");
+  try{disc=resolveCode($("code").value,pickA,pickB);render();show(`${disc.code} applied.`,"ok")}
+  catch(e){disc=null;render();show(e.message,"bad")}
+}
+function render(){
+  const q=pickB?quote(daysIncl(pickA,pickB),disc):null;
+  $("qDates").textContent=q?`${pickA} to ${pickB} · ${q.days} day${q.days>1?"s":""}`:(pickA?`From ${pickA}, pick end`:"Pick dates");
+  $("qService").textContent=eur(q?q.service:0);
+  $("qDiscRow").hidden=!(q&&q.discount);
+  if(q&&q.discount){$("qDiscLabel").textContent=`Discount ${q.code}`;$("qDisc").textContent="−"+eur(q.discount)}
+  $("qTotal").textContent=eur(q?q.total:0);
+  $("pay").disabled=!q||!$("agree").checked;$("done").hidden=true;show("");
+}
+function show(t,kind){$("msg").textContent=t;$("msg").className="msg"+(kind?" "+kind:"")}
+
+$("prev").onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);drawCal()};
+$("next").onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);drawCal()};
+$("apply").onclick=applyCode;
+$("agree").onchange=()=>{$("pay").disabled=!pickB||!$("agree").checked};
+$("code").addEventListener("keydown",e=>{if(e.key==="Enter")applyCode()});
+document.querySelectorAll(".demo code").forEach(c=>c.onclick=()=>{$("code").value=c.dataset.code;document.getElementById("book").scrollIntoView({behavior:"smooth"});applyCode()});
+$("pay").onclick=()=>{
+  if(!$("agree").checked)return show("Tick the box to confirm you have read the disclaimer.","bad");
+  if(!$("name").value.trim()||!$("email").value.includes("@"))return show("Add your name and a valid work email.","bad");
+  const q=quote(daysIncl(pickA,pickB),disc),d=$("done");d.hidden=false;
+  d.innerHTML=q.total===0
+    ?`<b>Booking confirmed.</b> Fully discounted, so no payment step. ${pickA} to ${pickB} is now blocked for other clients.`
+    :`<b>Test mode stops here.</b> The live site sends ${eur(q.total)} to Revolut checkout${q.code?` with code ${q.code}`:""}, then blocks ${pickA} to ${pickB} once paid.`;
+};
+
+drawCal();render();
+</script>
+
+</body></html>
