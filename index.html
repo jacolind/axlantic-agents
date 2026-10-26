@@ -41,9 +41,9 @@ section{border-top:1px solid var(--rule);padding-block:52px}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
 section h2{font-size:32px;margin-bottom:10px}
 .lede{color:var(--muted);max-width:60ch;margin:0 0 28px}
-.chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--panel)}
-.agent{padding:20px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);display:grid;gap:6px;align-content:start}
-.agent:nth-child(3n){border-right:0}.agent:nth-last-child(-n+3){border-bottom:0}
+.chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--rule)}
+.agent{padding:20px;background:var(--panel);display:grid;gap:6px;align-content:start}
+.agent:last-child:nth-child(3n+1){grid-column:1/-1}
 .agent .tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt)}
 .agent h3{font-size:20px}.agent p{margin:0;color:var(--muted);font-size:15px}
 .agent .feeds{font-family:var(--mono);font-size:12px;color:var(--muted)}
@@ -88,7 +88,7 @@ footer{border-top:1px solid var(--rule);padding-block:28px 40px;color:var(--mute
 .check input{width:18px;height:18px;margin:0;accent-color:var(--cobalt)}
 .check a{color:var(--cobalt)}
 .terms{margin:0;padding-left:20px;display:grid;gap:8px;max-width:68ch;color:var(--muted);font-size:15px}
-@media (max-width:760px){.desk,.rates{grid-template-columns:minmax(0,1fr)}.chain{grid-template-columns:minmax(0,1fr)}.agent{border-right:0!important;border-bottom:1px solid var(--rule)!important}.agent:last-child{border-bottom:0!important}nav{display:none}}
+@media (max-width:760px){.desk,.rates{grid-template-columns:minmax(0,1fr)}.chain{grid-template-columns:minmax(0,1fr)}nav{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -107,15 +107,16 @@ footer{border-top:1px solid var(--rule);padding-block:28px 40px;color:var(--mute
 <main class="wrap">
   <div class="hero">
     <h1>Your marketing desk runs on agents</h1>
-    <p>Six AI agents run marketing for asset managers. One client at a time.</p>
+    <p>Seven AI agents run marketing for asset managers. One client at a time.</p>
     <a class="btn" href="#book">Pick your dates</a>
   </div>
 
   <section id="agents">
     <div class="eyebrow">The swarm</div>
-    <h2>Six agents that feed each other</h2>
+    <h2>Seven agents that feed each other</h2>
     <div class="chain">
       <div class="agent"><span class="tag">Reads</span><h3>News reader</h3><p>Daily market summary for your products.</p></div>
+      <div class="agent"><span class="tag">Watches</span><h3>Competitor agent</h3><p>Spots new competitor prospectuses and summarises which products were added or removed since the last version.</p></div>
       <div class="agent"><span class="tag">Writes</span><h3>Research writer</h3><p>Notes in your house style.</p></div>
       <div class="agent"><span class="tag">Writes</span><h3>Post writer</h3><p>LinkedIn and X posts, queued for approval.</p></div>
       <div class="agent"><span class="tag">Publishes</span><h3>LinkedIn agent</h3><p>Keeps your page active.</p></div>
